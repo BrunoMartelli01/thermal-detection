@@ -11,7 +11,7 @@ dataset:
   extensions: null
   eval_batch_size: 64
   num_workers: 3
-  image_size: 256 # dimensions to which images are resized (mandatory)
+  image_size: 100 # dimensions to which images are resized (mandatory)
   center_crop: null # dimensions to which images are center-cropped after resizing (optional)
   normalization: imagenet # data distribution to which the images will be normalized: [none, imagenet]
   transform_config:
@@ -28,22 +28,17 @@ dataset:
     remove_border_count: 0
     use_random_tiling: False
     random_tile_count: 16
+
+
 model:
-  name: cfa
-  backbone: wide_resnet50_2
-  gamma_c: 1
-  gamma_d: 1
-  num_nearest_neighbors: 3
-  num_hard_negative_features: 3
-  radius: 1e-5
-  lr: 1e-3
-  weight_decay: 5e-4
-  amsgrad: true
-  early_stopping:
-    patience: 5
-    metric: pixel_AUROC
-    mode: max
-  normalization_method: min_max # options: [null, min_max, cdf]
+  name: padim
+  backbone: resnet18
+  pre_trained: true
+  layers:
+    - layer1
+    - layer2
+    - layer3
+  normalization_method: min_max # options: [none, min_max, cdf]
 
 metrics:
   image:
